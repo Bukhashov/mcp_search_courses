@@ -1,0 +1,28 @@
+{
+  "name": "rs-school-courses-parser",
+  "version": "1.0.0",
+  "description": "Парсер курсов с https://rs.school/courses. Извлекает article.course-card_course-card__Ff1Xo и сохраняет результат в JSON.",
+  "type": "module",
+  "main": "src/index.js",
+  "bin": {
+    "rs-parser": "./src/index.js",
+    "rs-courses-mcp": "./src/mcp-server.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "parse": "node src/index.js https://rs.school/courses",
+    "mcp": "node src/mcp-server.js",
+    "mcp:http": "node --env-file=.env index.js",
+    "serve": "node --env-file=.env src/server.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "axios": "^1.7.0",
+    "cheerio": "^1.0.0-rc.12",
+    "commander": "^12.1.0",
+    "zod": "^4.6.7"
+  },
+  "engines": {
+    "node": ">=20.6"
+  }
+}

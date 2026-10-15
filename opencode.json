@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "rs-school-courses": {
+      "type": "local",
+      "command": [
+        "node",
+        "C:/Users/User/Desktop/rs_school/rs-school-courses-parser/src/mcp-server.js"
+      ],
+      "enabled": true
+    }
+  }
+}
