@@ -1,0 +1,27 @@
+# Development образ с hot-reload
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Устанавливаем все зависимости (включая dev)
+COPY package*.json ./
+RUN npm ci
+
+# Копируем исходный код
+COPY index.js ./
+COPY src/ ./src/
+
+# Пользователь nodejs
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 -G nodejs && \
+    chown -R nodejs:nodejs /app
+USER nodejs
+
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOST=0.0.0.0
+ENV NODE_ENV=development
+
+# Используем node --watch для автозапуска при изменениях (Node 18+)
+CMD ["node", "--watch", "index.js"]

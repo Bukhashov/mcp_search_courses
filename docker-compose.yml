@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  rs-school-courses-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rs-school-courses-mcp
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Опционально: для разработки с hot-reload
+  rs-school-courses-mcp-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: rs-school-courses-mcp-dev
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      - PORT=3000
+      - HOST=0.0.0.0
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: "no"
+    profiles:
+      - dev
